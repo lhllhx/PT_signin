@@ -1,0 +1,11 @@
+flexget
+python-telegram-bot==12.8
+brotli
+baidu-aip
+pillow
+pandas==1.0.5
+matplotlib
+fuzzywuzzy
+python-Levenshtein
+pyppeteer
+pyppeteer_stealth
