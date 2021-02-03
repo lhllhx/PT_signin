@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-18.04
     if: github.event.repository.owner.id == github.event.sender.id  # 自己点的 start
     steps:
-    #- name: Checkout
-      #uses: actions/checkout@master
     
     - name: Checkout data
       uses: actions/checkout@master
@@ -26,8 +24,6 @@ jobs:
       with:
         repository: lhllhx/flexget_qbittorrent_mod
         path: .flexget/plugins
-  
-
     
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
@@ -44,7 +40,11 @@ jobs:
         wget --no-check-certificate https://github.com/$GITHUB_REPOSITORY/raw/main/requirements.txt
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    
+
+    - name: Random sleep
+      if: github.event_name == 'schedule'
+      run: sleep $(shuf -i 10-300 -n 1)
+        
     - name: unzip
       env: 
         zip: ${{ secrets.zip }}
