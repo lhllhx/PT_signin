@@ -226,7 +226,7 @@ tasks:
 
 1.本项目基于[flexget_qbittorrent_mod](https://github.com/IvonWei/flexget_qbittorrent_mod)制作，对其使用有相关疑问可以在原项目提出  
 2.原项目相关wiki：[auto_sign_in](https://github.com/IvonWei/flexget_qbittorrent_mod/wiki/auto_sign_in) [wecom](https://github.com/IvonWei/flexget_qbittorrent_mod/wiki/wecom)遇到相关问题可以自行查阅  
-3.tg机器人在第一次推送时有概率推送失败，第一次运行项目前发送一条消息到tg机器人能大幅度降低失败几率
+3.tg机器人在第一次推送时有概率推送失败，第一次运行项目前发送一条消息到tg机器人能大幅度降低失败几率  
 4.因原项目限制，一天只能推送一次，如果想重复测试，请删除私人仓库里的压缩文件并重新上传
 
 
