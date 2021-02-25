@@ -28,8 +28,6 @@ PTsignin 是一个基于上游项目[flexget_qbittorrent_mod](https://github.com
 
 - 您使用PTsignin造成的一切损失，与PTsignin无关。PTsignin不会对您的任何损失负责，包括但不限于奖励回收、账号异常
 
-- **严禁**在公共领域和站内论坛提及本项目，包括但不限于贴吧，公共论坛。 
-
 ## 📐部署
 
 部署流程比较繁琐，请耐心看完   
@@ -132,7 +130,6 @@ tasks:
       task:
         always_send: true
         message: |+
-          Result:
           {%- if task.accepted -%}
           {%- for group in task.accepted|groupby('task') -%}
           FlexGet has just signed in {{ group.list|length }} sites for task {{ group.grouper }}:
