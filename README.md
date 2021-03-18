@@ -176,11 +176,14 @@ tasks:
 ![new](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptsignin/upload.jpg)
 ### 6．获取github_api_token并填写secret
 6.1 获取github api密匙 见下图  
+
 ![token](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptsignin/token1.png)
 ![token](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptsignin/token2.png)
-![token](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptsignin/token3.png)
+![token](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptsignin/token3.png)  
+
 6.2填写secret
 ![secret](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptsignin/secret.jpg)
+
 需要填写的项目：  
 `DATA`：你存储zip的私人仓库全名 格式为`你的用户名/仓库名`  如：`abc/PT_signin_data`   
 `TOKEN`：github api token  
