@@ -228,6 +228,7 @@ tasks:
 2.原项目相关wiki：[auto_sign_in](https://github.com/IvonWei/flexget_qbittorrent_mod/wiki/auto_sign_in) [wecom](https://github.com/IvonWei/flexget_qbittorrent_mod/wiki/wecom)遇到相关问题可以自行查阅  
 3.tg机器人在第一次推送时有概率推送失败，第一次运行项目前发送一条消息到tg机器人能大幅度降低失败几率  
 4.因原项目限制，一天只能推送一次，如果想重复测试，请删除私人仓库里的压缩文件并重新上传
+5.极少数情况会在解压(unzip)阶段卡住，原因是您压缩时出现了兼容性问题，出现这种情况请调整压缩参数或更换压缩软件
 
 
 ## 📑协议
