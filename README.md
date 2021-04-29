@@ -163,7 +163,7 @@ tasks:
               bot_token: ''
               image: 'details_report.png'
               recipients:
-                - username: '' #注意这里是用户名，不是昵称
+                - username: '' #注意这里是用户名，不是昵称,不带@
         
 ```
 ### 5．加密打包并上传至私人仓库
