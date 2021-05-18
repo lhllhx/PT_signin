@@ -62,7 +62,7 @@ PTsignin 是一个基于上游项目[flexget_qbittorrent_mod](https://github.com
 telegram_bot:
 官方教程：https://core.telegram.org/bots#3-how-do-i-create-a-bot  
 具体教程百度很多 这里不再详述  
-需要注意 创建完成后，要发一条消息到bot里面激活bot
+需要注意 运行项目前，必须要发一条消息（任意内容皆可）到bot里面去激活bot
 
 ### 4．填写配置文件
 新建文本文件并重命名为 `config.yml` 
@@ -226,9 +226,10 @@ tasks:
 
 1.本项目基于[flexget_qbittorrent_mod](https://github.com/IvonWei/flexget_qbittorrent_mod)制作，对其使用有相关疑问可以在原项目提出  
 2.原项目相关wiki：[auto_sign_in](https://github.com/IvonWei/flexget_qbittorrent_mod/wiki/auto_sign_in) [wecom](https://github.com/IvonWei/flexget_qbittorrent_mod/wiki/wecom)遇到相关问题可以自行查阅  
-3.tg机器人在第一次推送时有概率推送失败，第一次运行项目前发送一条消息到tg机器人能大幅度降低失败几率  
-4.因原项目限制，一天只能推送一次，如果想重复测试，请删除私人仓库里的压缩文件并重新上传
-5.极少数情况会在解压(unzip)阶段卡住，原因是您压缩时出现了兼容性问题，出现这种情况请调整压缩参数或更换压缩软件
+3.使用tg机器人发送消息时，第一次运行项目前，必须由你发送一条消息到bot，从发送消息到运行程序不能间隔过久（仅首次运行需要）  
+4.使用tg机器人发送消息时，请注意不是所有人都有用户名（username），请自行了解你是否有用户名
+5.因原项目限制，一天只能推送一次，如果想重复测试，请删除私人仓库里的压缩文件并重新上传  
+6.极少数情况会在解压(unzip)阶段卡住，原因是您压缩时出现了兼容性问题，出现这种情况请调整压缩参数或更换压缩软件
 
 
 ## 📑协议
