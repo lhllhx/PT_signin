@@ -50,7 +50,7 @@ jobs:
         zip: ${{ secrets.zip }}
       run: |
         touch db-config.sqlite        
-        7z x -p$zip config.zip
+        7z x -aoa -p$zip config.zip
         rm -f  config.zip
         cp -r  $GITHUB_WORKSPACE/.flexget/ ~/.flexget
         cp -r  config.yml ~/.flexget
