@@ -9,3 +9,4 @@ fuzzywuzzy
 python-Levenshtein
 pyppeteer
 pyppeteer_stealth
+chardet
