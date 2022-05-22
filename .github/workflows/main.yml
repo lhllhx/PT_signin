@@ -1,96 +1,95 @@
 name: signin
 
-on: 
+on:
   watch:
-    types: [started]
+    types: [ started ]
   schedule:
     - cron: "0 22 * * *"
-    
-   
+
+
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id  # 自己点的 start
     steps:
-    
-    - name: Checkout data
-      uses: actions/checkout@master
-      with:
-        repository: ${{ secrets.DATA }}
-        token: ${{ secrets.TOKEN }}    
-    
-    - name: Checkout flexget_qbittorrent_mod repo
-      uses: actions/checkout@v2
-      with:
-        repository: lhllhx/flexget_qbittorrent_mod
-        path: .flexget/plugins
-    
-    - name: Setup timezone
-      uses: zcong1993/setup-timezone@master
-      with:
-        timezone: Asia/Shanghai
 
-    - name: Set up Python #安装python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    
-    - name: Install requirements #安装依赖
-      run: |
-        wget --no-check-certificate https://github.com/$GITHUB_REPOSITORY/raw/main/requirements.txt
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Checkout data
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ secrets.DATA }}
+          token: ${{ secrets.TOKEN }}
 
-    - name: Random sleep
-      if: github.event_name == 'schedule'
-      run: sleep $(shuf -i 10-200 -n 1)
-        
-    - name: unzip
-      env: 
-        zip: ${{ secrets.zip }}
-      run: |
-        touch db-config.sqlite        
-        7z x -aoa -p$zip config.zip
-        rm -f  config.zip
-        cp -r  $GITHUB_WORKSPACE/.flexget/ ~/.flexget
-        cp -r  config.yml ~/.flexget
-        cp -r  db-config.sqlite ~/.flexget
-        rm -f  db-config.sqlite
-        rm -f  config.yml
-        rm -f  *.log
-    
-    - name: checkin
-      continue-on-error: true
-      run: |
-        cd ~/.flexget
-        flexget --loglevel debug execute >/dev/null 2>&1    
-     
-    - name: rezip
-      env: 
-        zip: ${{ secrets.zip }}      
-      run: |
-        cd $GITHUB_WORKSPACE
-        cp -r ~/.flexget/db-config.sqlite $GITHUB_WORKSPACE
-        cp -r ~/.flexget/config.yml $GITHUB_WORKSPACE
-        cp -r ~/.flexget/*.log $GITHUB_WORKSPACE
-        zip -P $zip config.zip config.yml db-config.sqlite *.log
-    
-    - name: rm 
-      run: |
-        rm -f config.yml
-        rm -f db-config.sqlite
-        rm -f *.log
-        #rm -rf /.flexget 
-    
-    - name: Commit #上传新的数据到仓库
-      run: |
-        git config --global user.email github-actions@github.com
-        git config --global user.name github-actions
-        git add config.zip
-        git commit -m "update new data"
-    
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.TOKEN }} 
-        repository: ${{ secrets.DATA }}       
+      - name: Checkout flexget_qbittorrent_mod repo
+        uses: actions/checkout@v3
+        with:
+          repository: lhllhx/flexget_qbittorrent_mod
+          path: .flexget/plugins
+
+      - name: Setup timezone
+        uses: zcong1993/setup-timezone@master
+        with:
+          timezone: Asia/Shanghai
+
+      - name: Set up Python #安装python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.x
+
+      - name: Install requirements #安装依赖
+        run: |
+          wget --no-check-certificate https://github.com/$GITHUB_REPOSITORY/raw/main/requirements.txt
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Random sleep
+        if: github.event_name == 'schedule'
+        run: sleep $(shuf -i 10-200 -n 1)
+
+      - name: unzip
+        env:
+          zip: ${{ secrets.zip }}
+        run: |
+          touch db-config.sqlite        
+          7z x -aoa -p$zip config.zip
+          rm -f  config.zip
+          cp -r  $GITHUB_WORKSPACE/.flexget/ ~/.flexget
+          cp -r  config.yml ~/.flexget
+          cp -r  db-config.sqlite ~/.flexget
+          rm -f  db-config.sqlite
+          rm -f  config.yml
+          rm -f  *.log
+
+      - name: checkin
+        continue-on-error: true
+        run: |
+          cd ~/.flexget
+          flexget --loglevel debug execute >/dev/null 2>&1    
+
+      - name: rezip
+        env:
+          zip: ${{ secrets.zip }}
+        run: |
+          cd $GITHUB_WORKSPACE
+          cp -r ~/.flexget/db-config.sqlite $GITHUB_WORKSPACE
+          cp -r ~/.flexget/config.yml $GITHUB_WORKSPACE
+          cp -r ~/.flexget/*.log $GITHUB_WORKSPACE
+          zip -P $zip config.zip config.yml db-config.sqlite *.log
+
+      - name: rm
+        run: |
+          rm -f config.yml
+          rm -f db-config.sqlite
+          rm -f *.log
+          #rm -rf /.flexget 
+
+      - name: Commit #上传新的数据到仓库
+        run: |
+          git config --global user.email github-actions@github.com
+          git config --global user.name github-actions
+          git add config.zip
+          git commit -m "update new data"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          repository: ${{ secrets.DATA }}
