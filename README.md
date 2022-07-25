@@ -1,6 +1,9 @@
 ## 当图片显示异常时，可以尝试访问[这里](https://blog.3628688.xyz/index.php/2021/02/03/利用github-action实现pt自动签到和数据统计/)
 ## 近期公告
 近期GitHub官方对action签到使用趋向严格，本项目有毙命的风险。但是国内云函数均不支持python3.8(原项目需要python3.8实现），国外则需要信用卡验证等繁琐验证。请有相关搬迁建议的移步到issues区讨论一下。
+
+阿里云函数分支已更新，请有兴趣的开发者到新分支上测试。到时会逐渐切换到云函数上面，GitHub Action 将不再维护。
+https://github.com/lhllhx/PT_signin/tree/AliYun
 ## 🌀简介
 
 PTsignin 是一个基于上游项目[flexget_qbittorrent_mod](https://github.com/IvonWei/flexget_qbittorrent_mod) 和GitHub Action 实现的对PT站点的自动签到和数据统计。
