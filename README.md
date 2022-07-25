@@ -50,7 +50,7 @@ PTsignin 是一个基于上游项目[flexget_qbittorrent_mod](https://github.com
 
 ### 2．获取百度ORC_Api_Token
 
-打开 https://cloud.baidu.com/doc/OCR/s/dk3iqnq51 根据教程获取`app_id` `api_key` `secret_key` 完成教程里面的Step1即可
+打开 https://cloud.baidu.com/doc/OCR/s/dk3iqnq51 根据教程获取`app_id` `api_key` `secret_key` 
 
 ### 3．配置telegram_bot或企业微信推送
 
@@ -206,11 +206,11 @@ github_token：`token 你的github_token` 如：`token ghp_abcdabcdabcdacbd`
 
 7.2安装依赖
 
-创建层并在线安装依赖 依赖列表为 https://github.com/lhllhx/PT_signin/raw/v1.0-aliyun/requirements.txt
+创建层并在线安装依赖 依赖列表见 https://github.com/lhllhx/PT_signin/raw/v1.0-aliyun/requirements.txt
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali8.jpg)
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali9.jpg)
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali10.jpg)
-创建完成后到选上
+创建完成后选上
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali11.jpg)
 7.3修改超时时间为180秒，如站点较多 可能需要进一步加长
  ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali12.jpg)
