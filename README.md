@@ -81,7 +81,8 @@ tasks:
         secret_key: ''
       sites:
       #以下为具体站点设置 
-      #https://github.com/lhllhx/flexget_qbittorrent_mod/tree/master/ptsites 下存在需要的站点 只需配置相应的 主域名: cookie 
+      #以下为常见示例 具体以https://github.com/madwind/flexget_qbittorrent_mod/blob/master/config_example.yml#L36 下的示例为准 
+      #主域名: cookie 
         1ptba: xxxxxxxx
       #部分cookie过期太快，而改用模拟登陆的站点，如以下站点 无此站点的请删除，请删除
         filelist:
@@ -104,10 +105,11 @@ tasks:
             password: xxxxxxxx
         m-team:
           secret_key: <secret_key>
+          #二次验证, 扫描二维码得到文本 otpauth://totp/*****:****?secret=[secret_key]&issuer=***** (只取[secret_key]部分)
           login:
             username: 'xxxxxxxx'
             password: 'xxxxxxxx'
-            #二次验证, 扫描二维码得到文本 otpauth://totp/*****:****?secret=[secret_key]&issuer=***** (只取[secret_key]部分)
+           
         #u2特殊设置 无此站点的请删除
         dmhy:
           username: <username>
