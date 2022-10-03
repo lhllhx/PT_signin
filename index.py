@@ -9,8 +9,11 @@ github_date_repository=os.environ['github_date_repository']
 github_token=os.environ['github_token']
 def handler(event, context):
     #os.mkdir("./tmp/plugins")
-    os.chdir('/tmp')
-    os.mkdir("/tmp/pass")
+    try:
+        os.chdir('/tmp')
+        os.mkdir("/tmp/pass")
+    except:
+        pass
     headers={}
     headers["Authorization"] = github_token
     headers["Accept"]='application/vnd.github.v3.raw'
@@ -48,6 +51,7 @@ def handler(event, context):
     os.chdir('/tmp') 
     avg={'execute'}
     main(avg)
+    print("flexget run done")
     #os.remove('./pass/config.zip')
     files = ['db-config.sqlite', 'config.yml','flexget.log']
     with zipfile.ZipFile('config.zip', mode='w', compression=zipfile.ZIP_DEFLATED) as zf:
@@ -56,7 +60,8 @@ def handler(event, context):
     with open('config.zip', 'rb') as f:
       encode_zip = base64.b64encode(f.read())
       f.close()
-    
+      
+    print("zip done")
     headers["Accept"]='application/vnd.github+json'
     date=requests.get(date_url, headers=headers)
     sha=date.json()['sha']
@@ -69,4 +74,4 @@ def handler(event, context):
     update["sha"]=sha
     print(update["committer"]["name"])
     res=requests.put(date_url, headers=headers, data=json.dumps(update))
-    print("done")
+    print("all done")
