@@ -15,7 +15,7 @@ def handler(event, context):
     except:
         pass
     headers={}
-    headers["Authorization"] = github_token
+    headers["Authorization"] = 'Bearer '+ github_token
     headers["Accept"]='application/vnd.github.v3.raw'
     #plugins_path = os.path.join('./tmp/','plugins')
     #plugins_path = os.path.join('/','tmp')
