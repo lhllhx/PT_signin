@@ -198,7 +198,7 @@ tasks:
 
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali2.jpg)
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali4.jpg)
-复制文件 https://github.com/lhllhx/PT_signin/raw/v1.0-aliyun/index.py 内所有内容并覆盖到云函数的编辑框并部署
+复制文件 https://github.com/lhllhx/PT_signin/raw/AliYun/index.py 内所有内容并覆盖到云函数的编辑框并部署
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali5.jpg)
 
 填写环境变量`github_date_repository`和`github_token`
@@ -210,7 +210,7 @@ github_token：`token 你的github_token` 如：`token ghp_abcdabcdabcdacbd`
 
 7.2安装依赖
 
-创建层并在线安装依赖 依赖列表见 https://github.com/lhllhx/PT_signin/raw/v1.0-aliyun/requirements.txt
+创建层并在线安装依赖 依赖列表见 https://github.com/lhllhx/PT_signin/raw/AliYun/requirements.txt
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali8.jpg)
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali9.jpg)
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali10.jpg)
@@ -233,9 +233,8 @@ github_token：`token 你的github_token` 如：`token ghp_abcdabcdabcdacbd`
 注意：运行通过并不代表配置完全没有问题，请以最终结果和日志为准。
 
 ## 💰计费相关
-计算资源免费额度完全可以覆盖。流量费用，经过实测 阿里云云函数流量账单会每天结算一次，只要一个小时内未达到0.01元则费用会被抹零。本项目一次只使用了不到0.001元，无需担心产生计费
-![bill](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/bill.jpg)
-
+~计算资源免费额度完全可以覆盖。流量费用，经过实测 阿里云云函数流量账单会每天结算一次，只要一个小时内未达到0.01元则费用会被抹零。本项目一次只使用了不到0.001元，无需担心产生计费~
+阿里云计费有变动 请以实际为准
 
 ## 🔄同步
 
