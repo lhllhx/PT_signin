@@ -1,7 +1,7 @@
 python-telegram-bot==12.8
 brotli
 baidu-aip
-pillow
+pillow==9.5.0
 pandas
 matplotlib
 fuzzywuzzy
