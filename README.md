@@ -203,7 +203,7 @@ tasks:
 
 填写环境变量`github_date_repository`和`github_token`
 github_date_repository： 你存储zip的私人仓库全名 格式为`你的用户名/仓库名` 如：`abc/PT_signin_data`  
-github_token：`token 你的github_token` 如：`token ghp_abcdabcdabcdacbd`  
+github_token：`你的github_token` 如：`ghp_abcdabcdabcdacbd`  
 
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali6.jpg)
 ![ali](https://raw.githubusercontent.com/lhllhx/Blog/master/img/ptnote/ali7.jpg)
