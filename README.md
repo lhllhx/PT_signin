@@ -268,6 +268,7 @@ github_token：`你的github_token` 如：`ghp_abcdabcdabcdacbd`
 ## ❤️感谢
 本项目基于项目[flexget_qbittorrent_mod](https://github.com/IvonWei/flexget_qbittorrent_mod)建立，感谢其所作出的贡献。
 
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
 
 ## Star
 
