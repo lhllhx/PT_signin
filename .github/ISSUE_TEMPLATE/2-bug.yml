@@ -1,0 +1,27 @@
+name: 项目错误
+description: 项目本身存在错误，如项目指南过时已不适用
+labels: [ "bug", "triage" ]
+assignees:
+  - lhllhx
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢报告项目错误！
+  - type: checkboxes
+    attributes:
+      label: 在报告错误前，我承诺：
+      description: 请确保在报告错误前已满足以下要求，否则错误可能被判定为无效
+      options:
+        - label: 我确定这不是[文档](https://github.com/lhllhx/PT_signin?tab=readme-ov-file#%E7%AE%80%E4%BB%8B)阐明的问题
+          required: true
+        - label: 我使用的 Python 版本、依赖及 `index.py` 代码是最新的，参考[更新指南](https://github.com/lhllhx/PT_signin?tab=readme-ov-file#%E6%9B%B4%E6%96%B0)
+          required: true
+        - label: 我确定这是本项目的错误（表现为完全无法签到，且与阿里云、 `index.py` 代码等有关），而不是上游项目的错误（表现为个别站点签到失败等）。后者应向上游项目[反馈](https://github.com/madwind/flexget_qbittorrent_mod/issues/new)。
+          required: true
+  - type: textarea
+    attributes:
+      label: 错误描述
+      description: 详细描述你认为项目存在的错误，及你认为有哪些解决错误的办法（如果有）。
+    validations:
+      required: true

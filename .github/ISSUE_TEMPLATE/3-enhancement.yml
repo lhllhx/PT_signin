@@ -1,0 +1,23 @@
+name: 项目改进
+description: 项目可以优化，或项目无法满足需求需添加新功能
+labels: [ "enhancement", "triage" ]
+assignees:
+  - lhllhx
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢为本项目出谋献策！
+  - type: checkboxes
+    attributes:
+      label: 在提出建议前，我承诺：
+      description: 请确保在提出建议前已满足以下要求，否则请求可能被判定为无效
+      options:
+        - label: 我确定建议是本项目有关的，而不是上游项目有关的。如请求新的 PT 站点支持应向上游项目[反馈](https://github.com/madwind/flexget_qbittorrent_mod/issues/new)。
+          required: true
+  - type: textarea
+    attributes:
+      label: 请求描述
+      description: 详细描述你认为项目需要改进的地方。
+    validations:
+      required: true

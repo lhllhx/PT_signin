@@ -1,0 +1,39 @@
+name: 请求帮助
+description: 在操作时遇到了困难，需要帮助
+labels: [ "question", "triage" ]
+assignees:
+  - lhllhx
+body:
+  - type: markdown
+    attributes:
+      value: |
+        我们会尽力解决你遇到的困难。
+  - type: checkboxes
+    attributes:
+      label: 在请求帮助前，我承诺：
+      description: 请确保在请求帮助前已满足以下要求，否则问题可能被判定为无效
+      options:
+        - label: 我确定这不是[文档](https://github.com/lhllhx/PT_signin?tab=readme-ov-file#%E7%AE%80%E4%BB%8B)阐明的问题
+          required: true
+        - label: 我使用的 Python 版本、依赖及 `index.py` 代码是最新的，参考[更新指南](https://github.com/lhllhx/PT_signin?tab=readme-ov-file#%E6%9B%B4%E6%96%B0)
+          required: true
+        - label: 我确定这是本项目有关的疑问（如不知道如何配置阿里云），而不是与上游项目有关的疑问（如不知如何撰写配置文件）。后者应向上游项目[反馈](https://github.com/madwind/flexget_qbittorrent_mod/issues/new)。
+          required: true
+  - type: textarea
+    attributes:
+      label: 问题描述
+      description: 你在哪一步遇到了困难，遇到了什么困难。
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 配置文件
+      description: |
+        若问题与配置文件有关，应提供配置文件，并移除配置文件中的站点 cookie、密码及百度智能云文字识别应用密钥等信息。
+      render: yaml
+  - type: textarea
+    attributes:
+      label: 运行日志
+      description: |
+        若问题与运行日志有关，应提供运行日志。
+      render: text
