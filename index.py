@@ -1,77 +1,107 @@
+import asyncio
+import io
 import os
-import zipfile
-import requests
-import base64
-from flexget import main
-import json
+import shutil
+from base64 import b64encode
+from pathlib import Path
+from zipfile import ZipFile
 
-github_date_repository=os.environ['github_date_repository']
-github_token=os.environ['github_token']
-def handler(event, context):
-    #os.mkdir("./tmp/plugins")
-    try:
-        os.chdir('/tmp')
-        os.mkdir("/tmp/pass")
-    except:
-        pass
-    headers={}
-    headers["Authorization"] = 'Bearer '+ github_token
-    headers["Accept"]='application/vnd.github.v3.raw'
-    #plugins_path = os.path.join('./tmp/','plugins')
-    #plugins_path = os.path.join('/','tmp')
-    plugins_path = "/tmp"
-    plugins_file = plugins_path + '/plugins.zip'
-    plugins_url =  "https://github.com/lhllhx/flexget_qbittorrent_mod/archive/refs/heads/master.zip"
-    plugins=requests.get(plugins_url,headers=headers)
-    with open(plugins_file, 'wb') as f:
-        f.write(plugins.content)
-        f.close()
-    with zipfile.ZipFile(plugins_file, 'r') as zip_ref:
-        zip_ref.extractall(plugins_path)
-    os.rename(plugins_path + '/flexget_qbittorrent_mod-master', plugins_path + '/plugins')
-    print("plugins done")
+import aiohttp
 
-    #download_path = os.path.join('/tmp/','pass')
-    download_path = "/tmp"
-    download_file = download_path + '/config.zip'
-    date_url='https://api.github.com/repos/' + github_date_repository + '/contents/config.zip'    
-    headers["Accept"]='application/vnd.github.v3.raw'
-    date=requests.get(date_url, headers=headers)
-    with open(download_file, 'wb') as f:
-        f.write(date.content)
-        f.close()
-    zipFile = zipfile.ZipFile('/tmp/config.zip')
-    zipFile.extract('config.yml','/tmp')
-    try:
-        zipFile.extract('db-config.sqlite','/tmp') 
-    except:
-        print("first run")
-    print("data download done")
+import flexget
 
-    os.chdir('/tmp') 
-    avg={'execute'}
-    main(avg)
-    print("flexget run done")
-    #os.remove('./pass/config.zip')
-    files = ['db-config.sqlite', 'config.yml','flexget.log']
-    with zipfile.ZipFile('config.zip', mode='w', compression=zipfile.ZIP_DEFLATED) as zf:
-      for fn in files:
-           zf.write(fn)
-    with open('config.zip', 'rb') as f:
-      encode_zip = base64.b64encode(f.read())
-      f.close()
-      
-    print("zip done")
-    headers["Accept"]='application/vnd.github+json'
-    date=requests.get(date_url, headers=headers)
-    sha=date.json()['sha']
 
-    headers["Accept"]='application/vnd.github+json'
-    update={}
-    update["message"]="update config"
-    update["committer"]={"name":"autoupdate","email":"octocat@github.com"}
-    update["content"]=encode_zip.decode('utf-8')
-    update["sha"]=sha
-    print(update["committer"]["name"])
-    res=requests.put(date_url, headers=headers, data=json.dumps(update))
-    print("all done")
+def handler(event, context) -> str:
+    asyncio.run(main())
+    return 'success'
+
+
+async def main() -> None:
+    os.chdir('/tmp')
+    async with aiohttp.ClientSession(
+        headers={'Authorization': f'Bearer {os.environ['GITHUB_TOKEN']}'},
+        base_url='https://api.github.com',
+    ) as session:
+        await download(session, os.environ['PLUGIN_REPO'], os.environ['CONFIG_REPO'])
+        flexget.main(['execute'])
+        await upload(session, ['db-config.sqlite', 'flexget.log'], os.environ['CONFIG_REPO'])
+
+
+async def download(session: aiohttp.ClientSession, plugin_repo: str, config_repo: str) -> None:
+    async def download_plugins() -> None:
+        async with session.get(f'https://github.com/{plugin_repo}/archive/master.zip') as response:
+            assert response.status == 200, 'failed to retrieve the plugin repository'
+            with ZipFile(io.BytesIO(await response.read())) as zip_file:
+                zip_file.extractall()
+        plugin_path = Path('plugins')
+        # TODO: remove ignore_errors on Python 3.13+
+        shutil.rmtree(plugin_path, ignore_errors=True)
+        Path(zip_file.namelist()[0]).rename(plugin_path)
+
+    async def download_config() -> None:
+        async with session.get(f'repos/{config_repo}/contents/config.yml') as response:
+            assert response.status == 200, 'failed to retrieve config.yml'
+            Path('config.yml').write_bytes(await response.read())
+
+    async def download_db() -> None:
+        async with session.get(f'repos/{config_repo}/contents/db-config.sqlite') as response:
+            if response.status == 200:
+                Path('db-config.sqlite').write_bytes(await response.read())
+
+    session.headers['Accept'] = 'application/vnd.github.raw+json'
+    async with asyncio.TaskGroup() as tg:
+        for func in [download_plugins, download_config, download_db]:
+            tg.create_task(func())
+
+
+async def upload(session: aiohttp.ClientSession, filenames: list[str], config_repo: str) -> None:
+    owner, name = config_repo.split('/')
+    query = f"""
+        {{
+          repository(owner: "{owner}", name: "{name}") {{
+            defaultBranchRef {{
+              id
+              target {{
+                ... on Commit {{
+                  history(first: 1) {{
+                    nodes {{
+                      oid
+                    }}
+                  }}
+                }}
+              }}
+            }}
+          }}
+        }}"""
+    async with session.post('graphql', json={'query': query}) as resp:
+        branch = (await resp.json())['data']['repository']['defaultBranchRef']
+        branch_id = branch['id']
+        head_oid = branch['target']['history']['nodes'][0]['oid']
+    query = """
+        mutation ($input: CreateCommitOnBranchInput!) {
+          createCommitOnBranch(input: $input) {
+            commit {
+              url
+            }
+          }
+        }"""
+    variables = {
+        'variables': {
+            'input': {
+                'branch': {'id': branch_id},
+                'message': {'headline': 'FlexGet run'},
+                'fileChanges': {
+                    'additions': [
+                        {
+                            'path': filename,
+                            'contents': b64encode(Path(filename).read_bytes()).decode(),
+                        }
+                        for filename in filenames
+                    ]
+                },
+                'expectedHeadOid': head_oid,
+            }
+        }
+    }
+    async with session.post('graphql', json={'query': query, **variables}) as resp:
+        assert resp.status == 200, 'upload failed'
